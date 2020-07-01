@@ -1,5 +1,4 @@
 import random
-test_board = ['0','1','2','3','4','5','6','7','8','9']
 
 #Function to print out the board
 
@@ -45,13 +44,18 @@ def win_check(board,marker):
 def choose_first():
     print('We will now decide who goes first.')
     print('Deciding...')
-    player1 = 0
-    player2 = 1
-    decision = random.randint(0,1)
+    player1 = 10
+    player2 = 11
+    decision = random.randint(10,11)
     if decision == player1:
+        first_player = 'Player 1'
+        second_player = 'Player 2'
         print('Player 1 goes first')
-    else:
+    elif decision == player2:
+        first_player = 'Player 2'
+        second_player = 'Player 1'
         print('Player 2 goes first')
+    return first_player, second_player
 
 def space_check(board,position):
     possible_items = ['X','O']
@@ -80,7 +84,9 @@ def player_choice(board):
         choice = int(input('Please pick a position to play. (0-8)'))
         if space_check(board,choice) == False:
             print('Sorry, that space is already taken. Please pick another.')
-    print(f'You chose {choice}.')
+        else:
+            print(f'You chose {choice}. Great choice!')
+            free_space = True
     return choice
 
 def replay():
@@ -88,7 +94,60 @@ def replay():
     return replay_choice == 'Y'
 
 def run_game():
-    print('Welcome to Tic Tac Toe. Please follow the instructions or the game will implode and I will be very upset.')
-    player_input()
+    
+    game_status = True
+    test_board = ['0','1','2','3','4','5','6','7','8']
+
+    while game_status == True:
+        #Introduce and Assign Players To Their Symbols
+        print('Welcome to Tic Tac Toe. Please follow the instructions or the game will implode and I will be very upset.')
+        player_list = player_input()
+        player1 = player_list[0].upper()
+        print(f'Player 1 - you chose {player1} ')
+        player2 = player_list[1].upper()
+        print(f'Player 2 - that means you are {player2}')
+
+        #Decide who will choose first
+        player_order = choose_first()
+        first_player = player_order[0]
+        second_player = player_order[1]
+        
+
+        #Empty Board With Index Numbers is Shown
+        print('Here is the board: ')
+        display_board(test_board)
+
+        #Allow the first player to place their marker. The symbols are held in player 1 and player 2
+        
+        board_check = False
+        game_won = False
+        while board_check == False and game_won == False:
+            #First player chooses
+            print(f'{first_player} it is time to place your marker')
+            choice = player_choice(test_board)
+            space_check(test_board,choice)
+            place_marker(test_board,first_player,choice)
+            board_check = full_board_check(test_board)
+            game_won = win_check(test_board,first_player)
+            display_board(test_board)
+
+            #Second player chooses
+            print(f'{second_player} it is time to place your marker')
+            choice = player_choice(test_board)
+            space_check(test_board,choice)
+            place_marker(test_board,second_player,choice)
+            board_check = full_board_check(test_board)
+            game_won = win_check(test_board,second_player)
+            display_board(test_board)
+
+
+        #Ask if they want to replay
+        replay_choice = replay()
+        if replay_choice == True:
+            print("Let's play again!")
+        else:
+            print('Thanks for playing!')
+            game_status = False
+
 
 
