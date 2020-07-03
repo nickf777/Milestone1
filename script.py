@@ -109,8 +109,18 @@ def run_game():
 
         #Decide who will choose first
         player_order = choose_first()
-        first_player = player_order[0]
+        first_player = player_order[0] #str Player 1 or Player 2
         second_player = player_order[1]
+
+        #Connect turn order with the player symbols
+        first_player_marker = None
+        second_player_marker = None
+        if first_player == 'Player 1':
+            first_player_marker = player1
+            second_player_marker = player2
+        else:
+            first_player_marker = player2
+            second_player_marker = player1
         
 
         #Empty Board With Index Numbers is Shown
@@ -126,19 +136,32 @@ def run_game():
             print(f'{first_player} it is time to place your marker')
             choice = player_choice(test_board)
             space_check(test_board,choice)
-            place_marker(test_board,first_player,choice)
+            place_marker(test_board,first_player_marker,choice)
             board_check = full_board_check(test_board)
-            game_won = win_check(test_board,first_player)
-            display_board(test_board)
+            game_won = win_check(test_board,first_player_marker)
+            if game_won == True: 
+                print(f'{first_player} you win! Congratulations!')
+                break
+            elif board_check == True:
+                print('The board is full - it is a tie!')
+                break
+            
 
             #Second player chooses
             print(f'{second_player} it is time to place your marker')
             choice = player_choice(test_board)
             space_check(test_board,choice)
-            place_marker(test_board,second_player,choice)
+            place_marker(test_board,second_player_marker,choice)
             board_check = full_board_check(test_board)
-            game_won = win_check(test_board,second_player)
-            display_board(test_board)
+            game_won = win_check(test_board,second_player_marker)
+            if game_won == True: 
+                print(f'{second_player} you win! Congratulations!')
+                break
+            elif board_check == True:
+                print('The board is full - it is a tie!')
+                break
+            
+           
 
 
         #Ask if they want to replay

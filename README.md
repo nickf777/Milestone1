@@ -2,6 +2,8 @@
 
 Milestone Project 1 from 2020 Complete Python Bootcamp on Udemy.
 
-Needs fixing:
-There's an issue with the namespace being poluted between the index number and the choose first function
-There's an issue with the while loop in the run game that is not letting player 2 choose,
+Things I learned:
+- Variable naming is really important. There was a lot of confusion as the code increased in size as to what each variable held and what I should be using in the functions.
+- The difference between = and == is one I understand in theory but one that I forget constantly in every if statement
+- It would be very useful to define test conditions beforehand
+
